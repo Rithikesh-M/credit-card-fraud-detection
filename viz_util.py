@@ -4,6 +4,7 @@ from contextlib import contextmanager
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from sklearn.metrics import classification_report, confusion_matrix
 
 def visualize_samples(samples, labels, title="Samples visualization", colors=["green", "orange"]):
     """ Visualize first three dimensions of samples. """
@@ -36,3 +37,14 @@ def timeit(action="Timing"):
     # Compute and show elapsed time
     elapsed_time = time.time()-start_time
     print(f"{action} completed. Elapsed time: {elapsed_time:.2f}s")
+
+def evaluate_model(model, name, feat_test, y_test):
+    """ Evaluate a fitted classifier on the test set: print the classification report and confusion matrix. """
+    pred_test = model.predict(feat_test)
+
+    print(f"[ Evaluation result for {name} ]")
+    print("Classification report:")
+    print(classification_report(y_test, pred_test))
+
+    print("Confusion matrix:")
+    print(confusion_matrix(y_test, pred_test), "\n")
